@@ -56,12 +56,10 @@ pipeline {
 //                             docker.withRegistry('https://index.docker.io/v1/', DOCKERHUB_CREDENTIALS_ID) {
 //                                 docker.image("${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}").push()
 //                             }
-                            script {
-                                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
-                                                                    bat "echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin"
-                                                                    bat "docker push ${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}"
-                                                                    }
-                                }
+                            script { withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                                                                                                bat "echo %DOCKER_PASS% | docker login -u %DOCKER_USER% --password-stdin"
+                                                                                                bat "docker push ${DOCKERHUB_REPO}:${DOCKER_IMAGE_TAG}"
+                                                                                                }
                         }
                     }
                 }
